@@ -78,8 +78,8 @@ jobs:
       - name: Build the project
         run: cargo build --verbose
 
-      # - name: Install nextest
-      #   uses: taiki-e/install-action@nextest
+      - name: Install nextest
+        uses: taiki-e/install-action@nextest
 
-      # - name: Run tests with nextest
-      #   run: cargo nextest run --verbose
+      - name: Run tests with nextest
+        run: cargo nextest run --verbose

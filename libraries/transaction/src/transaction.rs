@@ -36,6 +36,7 @@ pub enum TransactionType {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Transaction {
     /// Transaction type (deposit, withdrawal, etc.)
+    #[serde(rename = "type")]
     pub tx_type: TransactionType,
     /// Client ID (u16)
     pub client: u16,

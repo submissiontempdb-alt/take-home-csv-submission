@@ -1,0 +1,7 @@
+type,client,tx,amount
+deposit,1,1,100.0
+invalid_type,1,2,50.0
+deposit,abc,3,75.0
+deposit,2,4,200.0
+withdrawal,2,5,invalid_amount
+deposit,3,6,300.0
