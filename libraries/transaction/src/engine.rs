@@ -1,4 +1,43 @@
 //! Transaction engine for processing payments
+//!
+//! # Architecture for Concurrent Scenarios
+//!
+//! The `TransactionEngine` is designed to be stateless and thread-safe, allowing it to be used
+//! in concurrent environments:
+//!
+//! - **No global state**: Each instance maintains its own client accounts and transaction history
+//! - **No shared mutable state**: No locks or RwLocks required
+//! - **Isolation**: Multiple engines can process different streams independently
+//! - **Memory efficient**: Each engine only stores data relevant to its transactions
+//!
+//! # Example: Concurrent TCP Stream Processing
+//!
+//! ```ignore
+//! use tokio::net::TcpListener;
+//! use transaction::TransactionEngine;
+//!
+//! #[tokio::main]
+//! async fn main() {
+//!     let listener = TcpListener::bind("127.0.0.1:8080").await.unwrap();
+//!
+//!     loop {
+//!         let (socket, addr) = listener.accept().await.unwrap();
+//!
+//!         // Each connection gets its own isolated engine
+//!         tokio::spawn(async move {
+//!             let mut engine = TransactionEngine::new();
+//!             // Process transactions from this specific TCP stream
+//!             // No contention with other concurrent streams
+//!         });
+//!     }
+//! }
+//! ```
+//!
+//! # Performance Characteristics
+//!
+//! - **Time**: O(1) per transaction operation (HashMap lookups)
+//! - **Space**: O(c + t) where c = clients, t = transactions
+//! - **Scalability**: Linear with number of clients, independent of concurrent streams
 
 use crate::{ClientAccount, DisputeState, Transaction, TransactionError, TransactionType};
 use rust_decimal::Decimal;
@@ -14,6 +53,37 @@ struct StoredTransaction {
 }
 
 /// The main transaction processing engine
+///
+/// # Concurrency
+///
+/// `TransactionEngine` is inherently thread-safe without requiring synchronization primitives:
+/// - No shared state across instances
+/// - Each instance owns its data exclusively
+/// - Safe to pass to multiple threads/async tasks
+/// - No global locks or atomic operations needed
+///
+/// # Example: Multi-threaded Processing
+///
+/// ```ignore
+/// use std::sync::Arc;
+/// use std::thread;
+/// use transaction::TransactionEngine;
+///
+/// // Create a separate engine for each thread
+/// let handles: Vec<_> = (0..4)
+///     .map(|i| {
+///         thread::spawn(move || {
+///             let mut engine = TransactionEngine::new();
+///             // Process transactions independently in this thread
+///             // No synchronization needed!
+///         })
+///     })
+///     .collect();
+///
+/// for handle in handles {
+///     handle.join().unwrap();
+/// }
+/// ```
 #[derive(Debug)]
 pub struct TransactionEngine {
     /// All client accounts (client_id -> account state)
@@ -26,6 +96,9 @@ pub struct TransactionEngine {
 
 impl TransactionEngine {
     /// Create a new transaction engine
+    ///
+    /// Each call creates an isolated engine with its own state.
+    /// Safe to call from multiple threads/async tasks concurrently.
     pub fn new() -> Self {
         TransactionEngine {
             clients: HashMap::new(),

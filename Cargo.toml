@@ -16,8 +16,10 @@ edition = "2024"
 transaction = { path = "libraries/transaction" }
 
 # Workspace dependencies [alphabetical order]
+csv = "1.4"
 rust_decimal = "1.39.0"
 serde = "1.0"
 strum = "0.27.2"
 strum_macros = "0.27.2"
 thiserror = "2.0.17"
+tokio = { version = "1.48", features = ["full"] }
