@@ -5,9 +5,19 @@ members = [
     # Ports
     "ports/submission",
     # Libraries
+    "libraries/transaction",
 ]
+
+[workspace.package]
+edition = "2024"
 
 [workspace.dependencies]
 # Workspace members [alphabetical order]
+transaction = { path = "libraries/transaction" }
 
 # Workspace dependencies [alphabetical order]
+rust_decimal = "1.39.0"
+serde = "1.0"
+strum = "0.27.2"
+strum_macros = "0.27.2"
+thiserror = "2.0.17"

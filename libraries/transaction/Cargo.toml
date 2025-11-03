@@ -1,0 +1,14 @@
+[package]
+name = "transaction"
+version = "0.1.0"
+edition = { workspace = true }
+
+[dependencies]
+# Workspace libraries [alphabetical order]
+
+# Workspace dependencies [alphabetical order]
+rust_decimal = { workspace = true, features = ["serde"] }
+serde = { workspace = true, features = ["derive"] }
+strum = { workspace = true, features = ["derive"] }
+strum_macros = { workspace = true }
+thiserror = { workspace = true }
