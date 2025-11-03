@@ -1,0 +1,13 @@
+[workspace]
+resolver = "2"
+
+members = [
+    # Ports
+    "ports/submission",
+    # Libraries
+]
+
+[workspace.dependencies]
+# Workspace members [alphabetical order]
+
+# Workspace dependencies [alphabetical order]
