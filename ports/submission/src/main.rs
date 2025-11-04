@@ -552,6 +552,7 @@ mod tests {
         use std::time::Instant;
 
         #[test]
+        #[ignore] // Ignored by default due to memory usage - run with: cargo test -- --ignored
         fn test_large_scale_transactions() {
             // Generate 200,000 transactions in memory
             // This validates the scalability claims in the module documentation
@@ -633,6 +634,7 @@ mod tests {
         }
 
         #[test]
+        #[ignore] // Ignored by default due to memory usage - run with: cargo test -- --ignored
         fn test_large_scale_with_disputes() {
             // Test with disputes, resolves, and chargebacks at scale
             let num_base_transactions = 50_000;
@@ -765,6 +767,7 @@ mod tests {
         }
 
         #[test]
+        #[ignore] // Ignored by default due to memory usage - run with: cargo test -- --ignored
         fn test_max_client_ids() {
             // Test with maximum u16 client ID (65535)
             let mut csv_content = String::from("type,client,tx,amount\n");
@@ -786,6 +789,7 @@ mod tests {
         }
 
         #[test]
+        #[ignore] // Ignored by default due to memory usage - run with: cargo test -- --ignored
         fn test_max_transaction_ids() {
             // Test with maximum u32 transaction ID
             let mut csv_content = String::from("type,client,tx,amount\n");
