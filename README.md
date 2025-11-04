@@ -1,10 +1,10 @@
 # Take Home CSV Submission
 
-A simple Rust application to process a series of financial transactions from a CSV file and output the resulting account states to stdout. 
+A simple Rust application to process a series of financial transactions from a CSV file and output the resulting account states to stdout. This project has been purposefully kept simple to demonstrate core functionality, error handling, code organization, and to avoid over-engineering/scope creep.
 
 ## Design Decisions 
 
-- Pureposefully did not include any kind of comprehensive logging to ensure automated tests could easily validate output.
+- Purposefully did not include any kind of comprehensive logging to ensure automated tests could easily validate output.
 - Given that this is a "simple toy" project, I have not implemented any persistent storage. All data is held in memory.
 - Used `rust_decimal` crate for accurate decimal arithmetic to avoid floating-point precision issues.
 - Focused heavily on writing clear and descriptive comments to explain the logic, flow of the application and my thought process.
@@ -50,6 +50,18 @@ To run the tests for this project, use the following command:
 
 ```bash
 cargo test
+```
+
+To run the resource-intensive tests separately, use:
+
+```bash
+cargo test -- --ignored
+```
+
+If you want to use `nextest`, you can run:
+
+```bash
+cargo nextest run --verbose
 ```
 
 ## Project Structure
