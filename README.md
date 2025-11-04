@@ -91,3 +91,9 @@ cargo nextest run --verbose
 - Any kind of design decisions.
 - This README file.
 - etc.
+
+## Notes
+
+Easy to navigate commit history showing the step-by-step development of the project is available for review:
+
+- [GitHub Commits](https://github.com/submissiontempdb-alt/take-home-csv-submission/commits/main/)
